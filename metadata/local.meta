@@ -1,0 +1,29 @@
+[app/ui]
+version = 8.0.1
+modtime = 1580459869.010091000
+
+[app/launcher]
+version = 8.0.1
+modtime = 1580459869.012577000
+
+[indexes/mkr]
+owner = admin
+version = 8.0.1
+modtime = 1580459968.944695000
+
+[inputs/udp%3A%2F%2F8125]
+owner = admin
+version = 8.0.1
+modtime = 1580460229.315491000
+
+[views/sensors_cloner]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 8.0.1
+modtime = 1580463668.445291000
+
+[lookups/sensors.csv]
+owner = dd
+version = 8.0.1
+modtime = 1580467235.892601000
