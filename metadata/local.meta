@@ -16,14 +16,14 @@ owner = admin
 version = 8.0.1
 modtime = 1580460229.315491000
 
-[views/sensors_cloner]
-access = read : [ * ], write : [ admin, power ]
-export = none
-owner = admin
-version = 8.0.1
-modtime = 1580463668.445291000
-
 [lookups/sensors.csv]
 owner = dd
 version = 8.0.1
 modtime = 1580467235.892601000
+
+[views/sensors2]
+access = read : [ * ], write : [ admin, power ]
+export = system
+owner = dd
+version = 8.0.1
+modtime = 1580550449.250766000
