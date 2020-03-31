@@ -1,10 +1,11 @@
 <form>
   <label>Sensors</label>
+  <description>MKR based data</description>
   <fieldset submitButton="false" autoRun="true">
     <input type="time" token="field1">
-      <label></label>
+      <label>Time Range</label>
       <default>
-        <earliest>-24h@h</earliest>
+        <earliest>@d</earliest>
         <latest>now</latest>
       </default>
     </input>
@@ -14,7 +15,7 @@
       <title>Temperature</title>
       <chart>
         <search>
-          <query>| mstats avg(_value) prestats=true WHERE metric_name="sensor.temperature" AND index="mkr" span=auto BY board_id
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="*.temperature" AND index="mkr" span=auto BY board_id
 | lookup sensors.csv board_id OUTPUT board_name
 | timechart avg(_value) span=5m agg=max limit=5 useother=false BY board_name
 | fields - _span*</query>
@@ -63,7 +64,7 @@
       <title>Humidity</title>
       <chart>
         <search>
-          <query>| mstats avg(_value) prestats=true WHERE metric_name="sensor.humidity" AND index="mkr" span=auto BY board_id 
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="*.humidity" AND index="mkr" span=auto BY board_id 
 | lookup sensors.csv board_id OUTPUT board_name
 | timechart avg(_value) span=5m agg=max limit=5 useother=false BY board_name
 | fields - _span*</query>
@@ -114,7 +115,7 @@
       <title>Illuminance</title>
       <chart>
         <search>
-          <query>| mstats avg(_value) prestats=true WHERE metric_name="sensor.illuminance" AND index="mkr" span=auto BY board_id
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="*.illuminance" AND index="mkr" span=auto BY board_id
 | lookup sensors.csv board_id OUTPUT board_name
 | timechart avg(_value) span=5m agg=max limit=5 useother=false BY board_name
 | fields - _span*</query>
@@ -162,11 +163,63 @@
   </row>
   <row>
     <panel>
-      <title>Pressure</title>
+      <title>Pressure by location</title>
       <chart>
         <search>
-          <query>| mstats avg(_value) prestats=true WHERE metric_name="sensor.pressure" AND index="mkr" span=auto BY board_id
-| lookup sensors.csv board_id OUTPUT board_name
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="*.pressure" AND index="mkr" span=auto BY board_id
+| lookup sensors.csv board_id OUTPUT board_name, board_location
+| timechart avg(_value) span=5m agg=max limit=5 useother=false BY board_location
+| fields - _span*</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">mBar</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">collapsed</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.maximumNumber">1100</option>
+        <option name="charting.axisY.minimumNumber">950</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Air Quality</title>
+      <chart>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE (metric_name="sensor.AirQuality" OR metric_name="air.quality") AND index="mkr" AND NOT (board_id="3C71BF878CE4" OR board_id="3C71BF96A648") span=5m BY board_id | lookup sensors.csv board_id OUTPUT board_name
 | timechart avg(_value) span=5m agg=max limit=5 useother=false BY board_name
 | fields - _span*</query>
           <earliest>$field1.earliest$</earliest>
@@ -177,10 +230,8 @@
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.text">mBar</option>
         <option name="charting.axisTitleX.visibility">collapsed</option>
-        <option name="charting.axisTitleY.text">mBar</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.abbreviation">none</option>
         <option name="charting.axisX.scale">linear</option>

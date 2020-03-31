@@ -18,12 +18,21 @@ modtime = 1580460229.315491000
 
 [lookups/sensors.csv]
 owner = dd
-version = 8.0.1
-modtime = 1580467235.892601000
+version = 8.0.2.1
+modtime = 1585397643.572880000
 
 [views/sensors2]
 access = read : [ * ], write : [ admin, power ]
 export = system
 owner = dd
-version = 8.0.1
-modtime = 1580550449.250766000
+version = 8.0.2.1
+modtime = 1585553013.379142000
+
+[app/install/install_source_checksum]
+version = 8.0.2
+modtime = 1582031449.531239000
+
+[views/ar_weather]
+owner = dd
+version = 8.0.2
+modtime = 1583083156.382882000
