@@ -2,3 +2,4 @@
 @eaDir
 *.tar
 *.spl
+lookup_file_*
