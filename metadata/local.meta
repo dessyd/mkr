@@ -29,10 +29,14 @@ version = 8.0.2.1
 modtime = 1585553013.379142000
 
 [app/install/install_source_checksum]
-version = 8.0.2
-modtime = 1582031449.531239000
+version = 8.0.4
+modtime = 1590769810.736527000
 
 [views/ar_weather]
 owner = dd
 version = 8.0.2
 modtime = 1583083156.382882000
+
+[views/sensors_cloner]
+version = 8.0.4
+modtime = 1590838991.430134000
