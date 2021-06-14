@@ -25,12 +25,12 @@ modtime = 1585397643.572880000
 access = read : [ * ], write : [ admin, power ]
 export = system
 owner = dd
-version = 8.0.2.1
-modtime = 1585553013.379142000
+version = 8.2.0
+modtime = 1622976770.576349000
 
 [app/install/install_source_checksum]
-version = 8.0.4
-modtime = 1590769810.736527000
+version = 8.2.0
+modtime = 1621064445.228104000
 
 [views/ar_weather]
 owner = dd
